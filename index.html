@@ -1,1 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SupermerkApp | by Bast</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="shortcut icon" href="./img/Recurso 1.svg" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sigmar&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>SupermerkApp</h1>
+        <div class="input-group">
+            <input type="text" id="itemName" placeholder="Artículo">
+            <input type="number" id="amount" placeholder="Monto" inputmode="numeric">
+        </div>
+        <div class="button-group">
+            <button id="addButton" class="btn add">Sumar</button>
+            <button id="subtractButton" class="btn subtract">Restar</button>
+        </div>
+        <div class="total">
+            <strong>total: <span style="color: blue;">$</span></strong><span id="totalAmount">0</span>
+        </div>
+        <div id="errorMessage" class="error-message"></div>
+        <div id="history" class="history"></div>
+      
+        <button id="undoButton" class="btn undo">Reiniciar</button>
 
+        <footer>desarrollado por <a href="https://www.instagram.com/bastdiseno.cl" id="credits">Bast&trade;</a></footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

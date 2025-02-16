@@ -1,1 +1,153 @@
+body {
+    font-family: 'roboto', sans-serif;
+    margin: 0;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    box-sizing: border-box;
+    background: rgb(2,0,36);
+    background: linear-gradient(54deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 100%, rgba(0,212,255,1) 100%);
+}
 
+.container {
+    background-color: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+h1 {
+    margin-bottom: 20px;
+    color: #050067; /* Morado suave */
+    font-size: 32px;
+    font-family: "Sigmar", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.input-group {
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+input[type="text"], input[type="number"] {
+    width: calc(100% - 24px); /* Ajuste para que calce dentro del contenedor */
+    padding: 12px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.3s ease;
+    box-sizing: border-box;
+}
+
+input[type="text"]:focus, input[type="number"]:focus {
+    border-color: #6C63FF; /* Morado suave */
+}
+
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    gap: 10px;
+}
+
+.btn {
+    padding: 12px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 48%;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-sizing: border-box;
+}
+
+.btn:hover {
+    transform: scale(1.05);
+}
+
+.add {
+    background-color: #10034f; /* Verde */
+    color: white;
+}
+
+.subtract {
+    background-color: #043fff; /* Rojo */
+    color: white;
+}
+
+.undo {
+    background-color: #4904d2; /* Morado suave */
+    color: white;
+    width: 100%;
+    margin-top: 10px;
+    display: none; /* Oculto por defecto */
+}
+
+.error-message {
+    color: #FF5252; /* Rojo */
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+.history {
+    margin-bottom: 20px;
+    text-align: left;
+    width: 100%;
+    background-color: #FAFAFA; /* Fondo suave para el historial */
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+}
+
+.history div {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+}
+
+.history div span:first-child {
+    color: #333333; /* Texto oscuro */
+}
+
+.history div span:last-child {
+    font-weight: bold;
+}
+
+.history div span.positive {
+    color: #4CAF50; /* Verde para valores positivos */
+}
+
+.history div span.negative {
+    color: #FF5252; /* Rojo para valores negativos */
+}
+
+.total {
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: #333333; /* Texto oscuro */
+}
+
+.total span {
+    color:#043fff; /* Morado suave */
+    font-weight: bold;
+}
+footer {
+    text-align: center;
+    font-size: 12px;
+}
+#credits {
+    color: #043fff;
+    text-decoration: none;
+}
