@@ -1,61 +1,32 @@
 let total = 0;
 let history = [];
-let lastOperation = null;
+
+// Cargar datos guardados al iniciar
+loadData();
 
 document.getElementById('addButton').addEventListener('click', () => {
     const amount = parseInt(document.getElementById('amount').value);
     const itemName = document.getElementById('itemName').value.trim();
+    const quantity = parseInt(document.getElementById('quantity').value) || 1; // Valor por defecto: 1
 
     if (isNaN(amount) || amount <= 0) {
         alert("Por favor, ingrese un monto válido.");
         return;
     }
 
-    total += amount;
+    const totalAmount = amount * quantity;
+    total += totalAmount;
     updateTotal();
-    addToHistory(itemName, amount, 'add');
-    lastOperation = { type: 'add', amount, itemName };
+    addToHistory(itemName, quantity, totalAmount);
+    saveData();
     clearInputs();
-    hideUndoButton();
 });
 
-document.getElementById('subtractButton').addEventListener('click', () => {
-    const amount = parseInt(document.getElementById('amount').value);
-    const itemName = document.getElementById('itemName').value.trim();
-
-    if (isNaN(amount) || amount <= 0) {
-        alert("Por favor, ingrese un monto válido.");
-        return;
-    }
-
-    if (total - amount < 0) {
-        document.getElementById('errorMessage').textContent = "No se puede tener un total negativo";
-        showUndoButton();
-        return;
-    }
-
-    total -= amount;
-    updateTotal();
-    addToHistory(itemName, amount, 'subtract');
-    lastOperation = { type: 'subtract', amount, itemName };
-    clearInputs();
-    hideUndoButton();
-});
-
-document.getElementById('undoButton').addEventListener('click', () => {
-    location.reload(); // Refrescar la página
-});
-
-function updateTotal() {
-    document.getElementById('totalAmount').textContent = total.toLocaleString('es-CL');
-}
-
-function addToHistory(itemName, amount, operation) {
-    const formattedAmount = amount.toLocaleString('es-CL'); // Formatear con puntos de miles
+function addToHistory(itemName, quantity, amount) {
     const entry = {
-        itemName: itemName || "",
-        amount: operation === 'add' ? `+${formattedAmount}` : `-${formattedAmount}`,
-        className: operation === 'add' ? 'positive' : 'negative', // Clase para el color
+        itemName: itemName || "Sin nombre",
+        quantity: quantity,
+        amount: amount,
     };
     history.push(entry);
     updateHistory();
@@ -63,24 +34,51 @@ function addToHistory(itemName, amount, operation) {
 
 function updateHistory() {
     const historyElement = document.getElementById('history');
-    historyElement.innerHTML = history.map(entry => `
+    historyElement.innerHTML = history.map((entry, index) => `
         <div>
+            <button onclick="removeEntry(${index})"><img src="./img/icons8-basura-llena.svg" width="24px"></button>
             <span>${entry.itemName}</span>
-            <span class="${entry.className}">${entry.amount}</span>
+            <span class="quantity">x${entry.quantity}</span>
+            <span class="amount positive">$${entry.amount.toLocaleString('es-CL')}</span>
         </div>
     `).join('');
 }
 
+function removeEntry(index) {
+    const entry = history[index];
+    total -= entry.amount;
+    history.splice(index, 1);
+    updateTotal();
+    updateHistory();
+    saveData();
+}
+
+function updateTotal() {
+    document.getElementById('totalAmount').textContent = total.toLocaleString('es-CL');
+}
+
 function clearInputs() {
     document.getElementById('itemName').value = "";
+    document.getElementById('quantity').value = "";
     document.getElementById('amount').value = "";
 }
 
-function showUndoButton() {
-    document.getElementById('undoButton').style.display = 'block';
+function saveData() {
+    localStorage.setItem('total', total);
+    localStorage.setItem('history', JSON.stringify(history));
 }
 
-function hideUndoButton() {
-    document.getElementById('undoButton').style.display = 'none';
-    document.getElementById('errorMessage').textContent = "";
+function loadData() {
+    const savedTotal = localStorage.getItem('total');
+    const savedHistory = localStorage.getItem('history');
+
+    if (savedTotal) {
+        total = parseInt(savedTotal);
+        updateTotal();
+    }
+
+    if (savedHistory) {
+        history = JSON.parse(savedHistory);
+        updateHistory();
+    }
 }
