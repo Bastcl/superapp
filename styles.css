@@ -1,13 +1,12 @@
 body {
     font-family: 'Arial', sans-serif;
-    background: rgb(2,0,36);
-    background: linear-gradient(-135deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 100%, rgba(0,212,255,1) 100%);
+    background: #0072ce;
     margin: 0;
     padding: 10px;
     display: flex;
     justify-content: center;
-    align-items: center;
-    min-height: 100vh;
+    align-items: start;
+    height: 100vh;
     box-sizing: border-box;
 }
 
@@ -24,9 +23,9 @@ body {
 
 h1 {
     margin-bottom: 20px;
-    color: rgba(9,9,121,1);
+    color: #0072ce;
     font-family: 'Sigmar', cursive;
-    font-size: 32px;
+    font-size: 36px;
     font-weight: 400;
 }
 
@@ -37,7 +36,7 @@ h1 {
 }
 
 .total span {
-    color: rgba(9,9,121,1);
+    color: #0072ce;
     font-weight: bold;
 }
 
@@ -82,8 +81,22 @@ input[type="text"]:focus, input[type="number"]:focus {
 }
 
 .add {
-    background-color: rgba(9,9,121,1);
+    background-color: #0072ce;
     color: white;
+    font-family: monospace;
+}
+.add:hover {
+    background-color: #015395; /* Rojo más oscuro al pasar el mouse */
+}
+.reset {
+    background-color: #ffb81c; /* Rojo llamativo */
+    color: black;
+    font-family: monospace;
+    margin-top: 10px; /* Espacio entre los botones */
+}
+
+.reset:hover {
+    background-color: #f5cf7d; /* Rojo más oscuro al pasar el mouse */
 }
 
 .error-message {
@@ -101,6 +114,9 @@ input[type="text"]:focus, input[type="number"]:focus {
     border-radius: 8px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
+    display: none; /* Oculta el historial inicialmente */
+    max-height: 300px; /* Altura máxima */
+    overflow-y: auto;  /* Barra de desplazamiento vertical si es necesario */
 }
 
 .history div {
@@ -155,7 +171,11 @@ footer a {
 }
 
 #credits {
-    color: rgba(9,9,121,1);
+    color: #0072ce;
     text-decoration: none;
+}
+
+#resetButton, .total {
+    display: none; /* Oculta el botón y el total inicialmente */
 }
 
