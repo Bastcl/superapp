@@ -1,13 +1,12 @@
 let total = 0;
 let history = [];
 
-// Cargar datos guardados al iniciar
 loadData();
 
 document.getElementById("addButton").addEventListener("click", () => {
   const amount = parseInt(document.getElementById("amount").value);
   const itemName = document.getElementById("itemName").value.trim();
-  const quantity = parseInt(document.getElementById("quantity").value) || 1; // Valor por defecto: 1
+  const quantity = parseInt(document.getElementById("quantity").value) || 1;
 
   if (isNaN(amount) || amount <= 0) {
     alert("Por favor, ingrese un monto válido.");
@@ -22,6 +21,20 @@ document.getElementById("addButton").addEventListener("click", () => {
   clearInputs();
 });
 
+document.getElementById("resetButton").addEventListener("click", () => {
+  const confirmReset = confirm(
+    "¿Estás seguro de que quieres reiniciar la tabla? Esto borrará todos los datos."
+  );
+  if (confirmReset) {
+    total = 0;
+    updateTotal();
+    history = [];
+    updateHistory();
+    localStorage.removeItem("total");
+    localStorage.removeItem("history");
+  }
+});
+
 function addToHistory(itemName, quantity, amount) {
   const entry = {
     itemName: itemName || "Sin nombre",
@@ -34,6 +47,19 @@ function addToHistory(itemName, quantity, amount) {
 
 function updateHistory() {
   const historyElement = document.getElementById("history");
+  const resetButton = document.getElementById("resetButton");
+  const totalElement = document.querySelector(".total");
+
+  if (history.length > 0) {
+    historyElement.style.display = "block";
+    resetButton.style.display = "inline-block";
+    totalElement.style.display = "block";
+  } else {
+    historyElement.style.display = "none";
+    resetButton.style.display = "none";
+    totalElement.style.display = "none";
+  }
+
   historyElement.innerHTML = history
     .map(
       (entry, index) => `
@@ -88,77 +114,4 @@ function loadData() {
     history = JSON.parse(savedHistory);
     updateHistory();
   }
-}
-document.getElementById("resetButton").addEventListener("click", () => {
-  const confirmReset = confirm(
-    "¿Estás seguro de que quieres reiniciar la tabla? Esto borrará todos los datos."
-  );
-  if (confirmReset) {
-    total = 0;
-    updateTotal();
-    history = [];
-    updateHistory(); // Esto ocultará el historial, el botón y el total automáticamente
-    localStorage.removeItem("total");
-    localStorage.removeItem("history");
-  }
-});
-
-function updateHistory() {
-  const historyElement = document.getElementById("history");
-
-  // Mostrar el historial si hay al menos un dato
-  if (history.length > 0) {
-    historyElement.style.display = "block"; // Mostrar el historial
-  } else {
-    historyElement.style.display = "none"; // Ocultar el historial si está vacío
-  }
-
-  // Actualizar el contenido del historial
-  historyElement.innerHTML = history
-    .map(
-      (entry, index) => `
-        <div>
-            <button onclick="removeEntry(${index})"><img src="./img/icons8-basura-llena.svg" width="24px"></button>
-            <span>${entry.itemName}</span>
-            <span class="quantity">x${entry.quantity}</span>
-            <span class="amount positive">$${entry.amount.toLocaleString(
-              "es-CL"
-            )}</span>
-        </div>
-    `
-    )
-    .join("");
-}
-
-function updateHistory() {
-  const historyElement = document.getElementById("history");
-  const resetButton = document.getElementById("resetButton");
-  const totalElement = document.querySelector(".total");
-
-  // Mostrar u ocultar el historial, el botón de reiniciar y el total
-  if (history.length > 0) {
-    historyElement.style.display = "block"; // Mostrar el historial
-    resetButton.style.display = "inline-block"; // Mostrar el botón de reiniciar
-    totalElement.style.display = "block"; // Mostrar el total
-  } else {
-    historyElement.style.display = "none"; // Ocultar el historial
-    resetButton.style.display = "none"; // Ocultar el botón de reiniciar
-    totalElement.style.display = "none"; // Ocultar el total
-  }
-
-  // Actualizar el contenido del historial
-  historyElement.innerHTML = history
-    .map(
-      (entry, index) => `
-        <div>
-            <button onclick="removeEntry(${index})"><img src="./img/icons8-basura-llena.svg" width="24px"></button>
-            <span>${entry.itemName}</span>
-            <span class="quantity">x${entry.quantity}</span>
-            <span class="amount positive">$${entry.amount.toLocaleString(
-              "es-CL"
-            )}</span>
-        </div>
-    `
-    )
-    .join("");
 }
