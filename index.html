@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SupermercApp</title>
+    <title>SuperApp</title>
     <link rel="shortcut icon" href="./img/web-icon.svg" type="image/x-icon">
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Sigmar&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
-        <h1>Supermerc<span style="color: #003087;">App</span></h1>
+        <h1>Super<span style="color: #003087;">App</span></h1>
         <div class="input-group">
             <input type="text" id="itemName" placeholder="Artículo">
             <input type="number" id="quantity" placeholder="Cantidad" min="1" inputmode="numeric">
@@ -18,13 +18,13 @@
         </div>
         <div class="button-group">
             <button id="addButton" class="btn add">añadir</button>
-            <button id="resetButton" class="btn reset">reiniciar</button>
         </div>
         <div class="total">
             <strong>Total:</strong> <span style="color:#0072ce">$</span><span id="totalAmount">0</span> 
         </div>
         <div id="errorMessage" class="error-message"></div>
         <div id="history" class="history"></div>
+        <button id="resetButton" class="btn reset">reiniciar</button>
         <footer>Desarrollado por <a href="https://www.instagram.com/bastdiseno.cl" id="credits">Bast&trade;</a></footer>
     </div>
     <script src="script.js"></script>
