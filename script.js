@@ -23,7 +23,7 @@ document.getElementById("addButton").addEventListener("click", () => {
 
 document.getElementById("resetButton").addEventListener("click", () => {
   const confirmReset = confirm(
-    "¿Estás seguro de que quieres reiniciar la tabla? Esto borrará todos los datos."
+    "¿Estás seguro de que quieres reiniciar? Esto borrará todos los datos."
   );
   if (confirmReset) {
     total = 0;
