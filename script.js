@@ -3,7 +3,27 @@ let history = [];
 
 loadData();
 
-document.getElementById("addButton").addEventListener("click", () => {
+document.getElementById("addButton").addEventListener("click", addProduct);
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    addProduct();
+  }
+});
+
+document.getElementById("resetButton").addEventListener("click", () => {
+  const confirmReset = confirm("¿Estás seguro de que quieres reiniciar? Esto borrará todos los datos.");
+  if (confirmReset) {
+    total = 0;
+    updateTotal();
+    history = [];
+    updateHistory();
+    localStorage.removeItem("total");
+    localStorage.removeItem("history");
+  }
+});
+
+function addProduct() {
   const amount = parseInt(document.getElementById("amount").value);
   const itemName = document.getElementById("itemName").value.trim();
   const quantity = parseInt(document.getElementById("quantity").value) || 1;
@@ -19,21 +39,7 @@ document.getElementById("addButton").addEventListener("click", () => {
   addToHistory(itemName, quantity, totalAmount);
   saveData();
   clearInputs();
-});
-
-document.getElementById("resetButton").addEventListener("click", () => {
-  const confirmReset = confirm(
-    "¿Estás seguro de que quieres reiniciar? Esto borrará todos los datos."
-  );
-  if (confirmReset) {
-    total = 0;
-    updateTotal();
-    history = [];
-    updateHistory();
-    localStorage.removeItem("total");
-    localStorage.removeItem("history");
-  }
-});
+}
 
 function addToHistory(itemName, quantity, amount) {
   const entry = {
@@ -67,9 +73,7 @@ function updateHistory() {
             <button onclick="removeEntry(${index})"><img src="./img/icons8-basura-llena.svg" width="24px"></button>
             <span>${entry.itemName}</span>
             <span class="quantity">x${entry.quantity}</span>
-            <span class="amount positive">$${entry.amount.toLocaleString(
-              "es-CL"
-            )}</span>
+            <span class="amount positive">$${entry.amount.toLocaleString("es-CL")}</span>
         </div>
     `
     )
@@ -78,16 +82,18 @@ function updateHistory() {
 
 function removeEntry(index) {
   const entry = history[index];
-  total -= entry.amount;
-  history.splice(index, 1);
-  updateTotal();
-  updateHistory();
-  saveData();
+  const confirmDelete = confirm(`¿Estás seguro de que quieres eliminar "${entry.itemName}"?`);
+  if (confirmDelete) {
+    total -= entry.amount;
+    history.splice(index, 1);
+    updateTotal();
+    updateHistory();
+    saveData();
+  }
 }
 
 function updateTotal() {
-  document.getElementById("totalAmount").textContent =
-    total.toLocaleString("es-CL");
+  document.getElementById("totalAmount").textContent = total.toLocaleString("es-CL");
 }
 
 function clearInputs() {
